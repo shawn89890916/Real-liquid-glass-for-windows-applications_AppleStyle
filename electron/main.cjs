@@ -18,11 +18,24 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: true
+      sandbox: false
     }
   });
 
-  win.once('ready-to-show', () => win.show());
+  // Fallback: show window after 3s even if ready-to-show hasn't fired
+  const showTimeout = setTimeout(() => {
+    if (!win.isDestroyed()) win.show();
+  }, 3000);
+
+  win.once('ready-to-show', () => {
+    clearTimeout(showTimeout);
+    if (!win.isDestroyed()) win.show();
+  });
+
+  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Failed to load:', errorCode, errorDescription);
+  });
+
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (/^https:\/\//.test(url)) shell.openExternal(url);
     return { action: 'deny' };
@@ -31,7 +44,10 @@ function createWindow() {
   if (isDev) {
     win.loadURL('http://localhost:5173');
   } else {
-    win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
+    const htmlPath = path.join(__dirname, '..', 'dist', 'index.html');
+    win.loadFile(htmlPath).catch(err => {
+      console.error('Failed to load file:', htmlPath, err);
+    });
   }
 }
 
