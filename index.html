@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23131c28'/%3E%3Ccircle cx='13' cy='12' r='8' fill='%23b9dcff' fill-opacity='.8'/%3E%3Ccircle cx='20' cy='20' r='8' fill='%23728fb8' fill-opacity='.72'/%3E%3C/svg%3E" />
+    <title>Liquid Glass Lab</title>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="glass-canvas" aria-label="实时液态玻璃渲染画布"></canvas>
+
+      <header class="titlebar">
+        <div class="brand" aria-label="Liquid Glass Lab">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Liquid Glass Lab</span>
+          <span class="brand-badge">GPU</span>
+        </div>
+        <div class="window-actions" aria-label="窗口控制">
+          <button data-window="minimize" aria-label="最小化"><span></span></button>
+          <button data-window="maximize" aria-label="最大化"><span></span></button>
+          <button data-window="close" aria-label="关闭"><span></span></button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="control-panel" aria-labelledby="controls-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">OPTICAL MATERIAL</p>
+              <h1 id="controls-title">玻璃调校</h1>
+            </div>
+            <button id="reset-button" class="icon-button" title="恢复默认" aria-label="恢复默认">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 7.3A8 8 0 1 1 4 14m.9-6.7V3.5m0 3.8H8.7"/></svg>
+            </button>
+          </div>
+
+          <div class="presets" role="group" aria-label="玻璃预设">
+            <button data-preset="clear">清透</button>
+            <button data-preset="balanced" class="active">平衡</button>
+            <button data-preset="dense">浓郁</button>
+          </div>
+
+          <div class="controls" id="controls"></div>
+
+          <div class="toggle-row">
+            <div>
+              <strong>跟随指针</strong>
+              <small>高光与折射方向实时响应</small>
+            </div>
+            <label class="switch">
+              <input id="follow-pointer" type="checkbox" checked />
+              <span></span>
+            </label>
+          </div>
+
+          <footer class="panel-footer">
+            <span class="status-dot"></span>
+            WebGL2 · 实时渲染
+          </footer>
+        </section>
+
+        <section class="stage" aria-labelledby="demo-title">
+          <div class="stage-copy">
+            <p class="eyebrow">LIVE MATERIAL 01</p>
+            <h2 id="demo-title">Liquid<br />Glass</h2>
+            <p>拖动玻璃，观察内容在曲面边缘发生折射与色散。</p>
+          </div>
+
+          <div id="glass-hitarea" class="glass-hitarea" tabindex="0" role="application" aria-label="可拖动的液态玻璃演示区域">
+            <div class="glass-content">
+              <span class="glass-kicker">REAL-TIME OPTICS</span>
+              <div class="glass-index">01</div>
+              <div class="glass-footer">
+                <span>Drag to explore</span>
+                <span class="drag-symbol" aria-hidden="true">↗</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="scene-labels" aria-hidden="true">
+            <span>REFRACTION</span><span>CHROMATIC EDGE</span><span>SPECULAR RESPONSE</span>
+          </div>
+        </section>
+      </main>
+
+      <div id="fallback" hidden>
+        <strong>此设备未启用 WebGL2</strong>
+        <span>请更新显卡驱动或在系统设置中启用硬件加速。</span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

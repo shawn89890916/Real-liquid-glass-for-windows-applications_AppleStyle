@@ -1,0 +1,134 @@
+:root {
+  font-family: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", sans-serif;
+  color: rgba(255, 255, 255, 0.92);
+  background: #0b1017;
+  font-synthesis: none;
+  --panel: rgba(19, 25, 34, 0.64);
+  --hairline: rgba(255, 255, 255, 0.105);
+  --muted: rgba(239, 244, 255, 0.5);
+  --accent: #b9dcff;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { user-select: none; }
+button, input { font: inherit; }
+button { color: inherit; }
+
+#glass-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.titlebar {
+  position: relative;
+  z-index: 10;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 22px;
+  border-bottom: 1px solid rgba(255,255,255,.045);
+  -webkit-app-region: drag;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 620; letter-spacing: .01em; }
+.brand-mark { width: 15px; height: 15px; border-radius: 5px; background: linear-gradient(145deg, #dff4ff, #668bc3); box-shadow: inset 0 1px 1px white, 0 4px 18px #5a9cff66; }
+.brand-badge { font: 600 8px/1 "Cascadia Mono", monospace; letter-spacing: .1em; color: #a5caed; padding: 4px 6px; border-radius: 6px; background: rgba(139, 191, 241, .11); }
+
+.window-actions { height: 100%; display: flex; -webkit-app-region: no-drag; }
+.window-actions button { width: 46px; border: 0; background: transparent; display: grid; place-items: center; transition: background .16s ease; }
+.window-actions button:hover { background: rgba(255,255,255,.08); }
+.window-actions button:last-child:hover { background: #c42b1c; }
+.window-actions span { display: block; width: 10px; height: 10px; position: relative; }
+[data-window="minimize"] span::after { content:""; position:absolute; left:0; right:0; bottom:1px; height:1px; background:currentColor; }
+[data-window="maximize"] span { border: 1px solid currentColor; }
+[data-window="close"] span::before, [data-window="close"] span::after { content:""; position:absolute; top:4px; left:-1px; width:12px; height:1px; background:currentColor; transform:rotate(45deg); }
+[data-window="close"] span::after { transform:rotate(-45deg); }
+
+.workspace {
+  position: relative;
+  z-index: 2;
+  height: calc(100% - 52px);
+  display: grid;
+  grid-template-columns: 304px 1fr;
+  gap: 18px;
+  padding: 18px;
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 22px;
+  border-radius: 27px;
+  background: linear-gradient(145deg, rgba(33, 41, 53, .78), rgba(15, 21, 29, .67));
+  backdrop-filter: blur(28px) saturate(1.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 24px 70px rgba(0,0,0,.24);
+}
+
+.panel-heading { display:flex; align-items:center; justify-content:space-between; margin-bottom: 22px; }
+.eyebrow { margin:0 0 7px; font: 600 9px/1 "Cascadia Mono", monospace; letter-spacing:.19em; color: #8eabc6; }
+h1 { margin:0; font-size: 25px; font-weight: 620; letter-spacing:-.035em; }
+.icon-button { width:34px; height:34px; display:grid; place-items:center; border:0; border-radius:50%; background:rgba(255,255,255,.065); cursor:pointer; transition: transform .25s var(--ease), background .2s; }
+.icon-button:hover { background:rgba(255,255,255,.12); transform:rotate(-25deg); }
+.icon-button svg { width:16px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+
+.presets { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:4px; border-radius:13px; background:rgba(2,7,12,.32); margin-bottom:25px; }
+.presets button { border:0; padding:8px 4px; border-radius:9px; background:transparent; font-size:11px; color:var(--muted); cursor:pointer; transition:all .25s var(--ease); }
+.presets button:hover { color:white; }
+.presets button.active { color:white; background:rgba(255,255,255,.12); box-shadow:inset 0 1px rgba(255,255,255,.09), 0 3px 12px rgba(0,0,0,.15); }
+
+.controls { display:flex; flex-direction:column; gap:20px; overflow:auto; padding:1px 2px 15px 0; scrollbar-width:none; }
+.control-row label { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; font-size:12px; font-weight:560; }
+.control-row output { font: 500 10px/1 "Cascadia Mono", monospace; color:#96b6d3; }
+input[type="range"] { width:100%; height:16px; margin:0; appearance:none; background:transparent; cursor:pointer; }
+input[type="range"]::-webkit-slider-runnable-track { height:3px; border-radius:4px; background:linear-gradient(90deg, rgba(185,220,255,.82) var(--value), rgba(255,255,255,.11) var(--value)); }
+input[type="range"]::-webkit-slider-thumb { appearance:none; width:14px; height:14px; margin-top:-5.5px; border-radius:50%; background:#e9f5ff; box-shadow:0 0 0 4px rgba(174,216,255,.1), 0 2px 8px rgba(0,0,0,.35); transition:transform .18s; }
+input[type="range"]:hover::-webkit-slider-thumb, input[type="range"]:focus-visible::-webkit-slider-thumb { transform:scale(1.18); }
+
+.toggle-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:19px 0; margin-top:auto; border-top:1px solid var(--hairline); }
+.toggle-row strong { display:block; font-size:12px; font-weight:600; }
+.toggle-row small { display:block; margin-top:4px; color:var(--muted); font-size:9px; }
+.switch input { position:absolute; opacity:0; }
+.switch span { display:block; width:37px; height:21px; padding:2px; border-radius:20px; background:rgba(255,255,255,.13); cursor:pointer; transition:background .2s; }
+.switch span::after { content:""; display:block; width:17px; height:17px; border-radius:50%; background:#e8eef5; box-shadow:0 2px 6px #0006; transition:transform .3s var(--ease); }
+.switch input:checked + span { background:#6b9ecc; }
+.switch input:checked + span::after { transform:translateX(16px); }
+.switch input:focus-visible + span { outline:2px solid white; outline-offset:3px; }
+.panel-footer { display:flex; align-items:center; gap:7px; color:rgba(255,255,255,.32); font:500 8px/1 "Cascadia Mono", monospace; letter-spacing:.08em; }
+.status-dot { width:5px; height:5px; border-radius:50%; background:#8ad8bb; box-shadow:0 0 8px #73dfb5; }
+
+.stage { position:relative; min-width:0; overflow:hidden; border-radius:28px; }
+.stage-copy { position:absolute; left:clamp(34px,5vw,76px); top:clamp(38px,8vh,88px); z-index:1; pointer-events:none; }
+.stage-copy h2 { margin:0; font-size:clamp(58px,8vw,118px); line-height:.78; font-weight:650; letter-spacing:-.085em; color:rgba(242,247,255,.94); }
+.stage-copy > p:last-child { width:230px; margin:28px 0 0 4px; font-size:12px; line-height:1.65; color:rgba(235,242,255,.52); }
+
+.glass-hitarea { position:absolute; left:48%; top:48%; width:min(53vw,690px); aspect-ratio:1.65; border-radius:clamp(52px,6vw,86px); transform:translate(-38%,-34%); z-index:3; cursor:grab; outline:none; touch-action:none; }
+.glass-hitarea:active { cursor:grabbing; }
+.glass-hitarea:focus-visible { outline:2px solid rgba(204,232,255,.78); outline-offset:8px; }
+.glass-content { position:absolute; inset:0; padding:clamp(30px,4vw,58px); display:flex; flex-direction:column; color:rgba(255,255,255,.82); text-shadow:0 1px 10px rgba(0,0,0,.18); pointer-events:none; }
+.glass-kicker { font:600 9px/1 "Cascadia Mono",monospace; letter-spacing:.18em; }
+.glass-index { margin:auto 0; font-size:clamp(78px,10vw,150px); line-height:.8; font-weight:250; letter-spacing:-.08em; }
+.glass-footer { display:flex; align-items:center; justify-content:space-between; font-size:11px; letter-spacing:.03em; }
+.drag-symbol { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.12); font-size:15px; }
+.scene-labels { position:absolute; left:30px; right:30px; bottom:23px; display:flex; justify-content:space-between; font:600 8px/1 "Cascadia Mono",monospace; letter-spacing:.14em; color:rgba(255,255,255,.23); }
+
+#fallback { position:fixed; z-index:50; inset:0; display:grid; place-content:center; text-align:center; background:#0b1017; }
+#fallback[hidden] { display:none; }
+#fallback strong { font-size:22px; }
+#fallback span { margin-top:8px; color:var(--muted); }
+
+@media (max-width: 1100px) {
+  .workspace { grid-template-columns:270px 1fr; }
+  .control-panel { padding:18px; }
+  .glass-hitarea { width:60vw; transform:translate(-43%,-28%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}

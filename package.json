@@ -1,0 +1,47 @@
+{
+  "name": "liquid-glass-lab",
+  "version": "1.0.0",
+  "description": "An Apple-inspired Liquid Glass optics demo for Windows.",
+  "main": "electron/main.cjs",
+  "author": "Shawn",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "start": "electron .",
+    "build:web": "vite build",
+    "dist": "npm run build:web && electron-builder --win nsis && electron-builder --win portable --config.win.artifactName=Liquid-Glass-Lab-${version}-${arch}-Portable.${ext}",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "electron": "42.4.1",
+    "electron-builder": "26.15.3",
+    "vite": "8.0.16"
+  },
+  "build": {
+    "appId": "com.shawn.liquidglasslab",
+    "productName": "Liquid Glass Lab",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.png",
+      "artifactName": "Liquid-Glass-Lab-${version}-${arch}-Setup.${ext}",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

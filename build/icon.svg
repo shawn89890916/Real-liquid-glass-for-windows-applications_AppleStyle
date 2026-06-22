@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="42" x2="438" y2="476" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1C2B3D"/>
+      <stop offset="1" stop-color="#090E16"/>
+    </linearGradient>
+    <linearGradient id="glass-a" x1="112" y1="94" x2="345" y2="368" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ECF9FF" stop-opacity=".96"/>
+      <stop offset=".42" stop-color="#9BC9EE" stop-opacity=".65"/>
+      <stop offset="1" stop-color="#4A6B9A" stop-opacity=".38"/>
+    </linearGradient>
+    <linearGradient id="glass-b" x1="195" y1="175" x2="414" y2="416" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D4EFFF" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#6E7AD0" stop-opacity=".42"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <ellipse cx="281" cy="377" rx="174" ry="62" fill="#3B7EC5" fill-opacity=".25" filter="url(#shadow)"/>
+  <rect x="84" y="90" width="280" height="280" rx="88" fill="url(#glass-a)"/>
+  <rect x="84.75" y="90.75" width="278.5" height="278.5" rx="87.25" fill="none" stroke="white" stroke-opacity=".56" stroke-width="1.5"/>
+  <rect x="171" y="169" width="257" height="257" rx="82" fill="url(#glass-b)"/>
+  <path d="M214 170h132c45.3 0 82 36.7 82 82v8c-38-42-91-63-159-55-38 4-70-8-98-36h43Z" fill="white" fill-opacity=".22"/>
+  <rect x="171.75" y="169.75" width="255.5" height="255.5" rx="81.25" fill="none" stroke="white" stroke-opacity=".42" stroke-width="1.5"/>
+</svg>
