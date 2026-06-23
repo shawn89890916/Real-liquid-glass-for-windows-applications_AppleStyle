@@ -66,7 +66,7 @@ function syncGlass() {
 try {
   renderer = new GlassRenderer(document.querySelector('#glass-canvas'));
   syncGlass();
-  renderer.render();
+  renderer.startRendering();
 } catch (error) {
   console.error(error);
   document.querySelector('#fallback').hidden = false;

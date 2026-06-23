@@ -22,6 +22,7 @@ export class GlassRenderer {
     this.reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.setup();
     this.resize();
+    this.animationFrameId = null;
   }
 
   setup() {
@@ -76,6 +77,12 @@ export class GlassRenderer {
     gl.uniform1f(u.lighting, this.values.lighting);
     gl.uniform1f(u.tint, this.values.tint);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    requestAnimationFrame(this.render);
   };
+
+  startRendering() {
+    this.render();
+    this.intervalId = setInterval(() => {
+      this.render();
+    }, 16);
+  }
 }
