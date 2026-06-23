@@ -1,6 +1,6 @@
 {
   "name": "liquid-glass-lab",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An Apple-inspired Liquid Glass optics demo for Windows.",
   "main": "electron/main.cjs",
   "author": "Shawn",
@@ -22,7 +22,7 @@
     "productName": "Liquid Glass Lab",
     "asar": true,
     "directories": {
-      "output": "release"
+      "output": "release-final"
     },
     "files": [
       "dist/**/*",

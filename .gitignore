@@ -1,6 +1,9 @@
 node_modules/
 dist/
 release/
+release-*/
+release-final/
+release-new/
 output/
 .playwright-mcp/
 *.log

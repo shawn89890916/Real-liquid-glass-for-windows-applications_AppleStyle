@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, desktopCapturer } = require('electron');
 const path = require('node:path');
 
 const isDev = !app.isPackaged;
@@ -50,6 +50,12 @@ function createWindow() {
     });
   }
 }
+
+// IPC: get desktop capturer source ID for screen capture
+ipcMain.handle('desktop-capturer:get-source', async () => {
+  const sources = await desktopCapturer.getSources({ types: ['screen'], thumbnailSize: { width: 0, height: 0 } });
+  return sources[0]?.id || null;
+});
 
 ipcMain.on('window:minimize', (event) => BrowserWindow.fromWebContents(event.sender)?.minimize());
 ipcMain.on('window:maximize', (event) => {
